@@ -1,0 +1,4 @@
+koth_zone:
+    world: world
+    center: { x: -97, y: 75, z: -1342 }
+    radius: 15
