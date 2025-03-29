@@ -1,5 +1,0 @@
-name: Consolar
-version: '${version}'
-main: com.spectrasonic.Consolar.Main
-api-version: '1.21'
-authors: [Spectrasonic]

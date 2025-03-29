@@ -31,7 +31,7 @@ public class ParticleTask extends BukkitRunnable {
         this.zone = zone;
 
         // Inicializar algunas columnas
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 16; i++) {
             spawnNewColumn();
         }
     }
