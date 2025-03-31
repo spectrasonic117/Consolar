@@ -87,11 +87,12 @@ public class KothGame {
     }
 
     public void giveSpecialItem(Player player) {
-        ItemStack specialItem = ItemBuilder.setMaterial("SALMON")
-                .setName("<gradient:#A33330:#618F6B:#A33330><bold>Salmon de empuje")
+        ItemStack specialItem = ItemBuilder.setMaterial("PAPER")
+                .setName("<magenta><bold>DILDO")
                 .setLore("<gray>¡Usa este item para empujar a tus enemigos!",
                         "<gray>Y mantener el control de la zona.")
                 .addEnchantment("knockback", 20)
+                .setCustomModelData(1014)
                 .setFlag("HIDE_ENCHANTS")
                 .build();
 

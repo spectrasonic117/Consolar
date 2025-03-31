@@ -22,9 +22,6 @@ repositories {
         name = "aikar"
         url = "https://repo.aikar.co/content/groups/aikar/"
     }
-    maven {
-    url ="https://repo.extendedclip.com/content/repositories/placeholderapi/"
-    }
 }
 
 dependencies {
@@ -44,14 +41,13 @@ dependencies {
     implementation "net.kyori:adventure-api:4.19.0"
     // implementation "net.kyori:adventure-text-serializer-legacy:4.19.0" // Legacy
 
-    compileOnly "me.clip:placeholderapi:2.11.6"
 }
 
 shadowJar {
     relocate "co.aikar.commands", "com.spectrasonic.Consolar.acf"
     relocate "co.aikar.locales", "com.spectrasonic.Consolar.locales"
     destinationDirectory = file("${rootDir}/out")
-    archiveFileName = "${rootProject.name}-${version}.jar" 
+    archiveFileName = "Spectra-${rootProject.name}-${version}.jar" 
 }
 
 build.dependsOn shadowJar
