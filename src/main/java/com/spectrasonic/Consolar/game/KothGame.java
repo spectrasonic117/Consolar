@@ -88,7 +88,7 @@ public class KothGame {
 
     public void giveSpecialItem(Player player) {
         ItemStack specialItem = ItemBuilder.setMaterial("PAPER")
-                .setName("<magenta><bold>DILDO")
+                .setName("<light_purple><bold>DILDO")
                 .setLore("<gray>¡Usa este item para empujar a tus enemigos!",
                         "<gray>Y mantener el control de la zona.")
                 .addEnchantment("knockback", 20)
@@ -107,9 +107,13 @@ public class KothGame {
     public void removeSpecialItem(Player player) {
         UUID uuid = player.getUniqueId();
 
-        // Remove all salmon items from inventory
+        // Remove all PAPER items with custom model data 1014
         player.getInventory().forEach((item) -> {
-            if (item != null && item.getType() == Material.SALMON) {
+            if (item != null && 
+                item.getType() == Material.PAPER && 
+                item.getItemMeta() != null && 
+                item.getItemMeta().hasCustomModelData() && 
+                item.getItemMeta().getCustomModelData() == 1014) {
                 player.getInventory().remove(item);
             }
         });
