@@ -44,7 +44,7 @@ public class KothGame {
         isRunning = true;
 
         // Iniciar tareas
-        pointsTask = new PointsTask(plugin, this).runTaskTimer(plugin, 20L, 20L);
+        pointsTask = new PointsTask(plugin, this).runTaskTimer(plugin, 40L, 40L);
         particleTask = new ParticleTask(plugin, zone).runTaskTimer(plugin, 0L, 10L);
 
         // Dar items especiales a todos los jugadores
@@ -109,11 +109,11 @@ public class KothGame {
 
         // Remove all PAPER items with custom model data 1014
         player.getInventory().forEach((item) -> {
-            if (item != null && 
-                item.getType() == Material.PAPER && 
-                item.getItemMeta() != null && 
-                item.getItemMeta().hasCustomModelData() && 
-                item.getItemMeta().getCustomModelData() == 1014) {
+            if (item != null &&
+                    item.getType() == Material.PAPER &&
+                    item.getItemMeta() != null &&
+                    item.getItemMeta().hasCustomModelData() &&
+                    item.getItemMeta().getCustomModelData() == 1014) {
                 player.getInventory().remove(item);
             }
         });
