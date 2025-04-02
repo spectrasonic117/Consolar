@@ -8,6 +8,7 @@ import com.spectrasonic.Consolar.game.KothGame;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.Bukkit;
 
 @CommandAlias("consolar")
 public class ConsolarCommand extends BaseCommand {
@@ -31,7 +32,10 @@ public class ConsolarCommand extends BaseCommand {
                 MessageUtils.sendMessage(sender, "<red>El juego ya está en curso.</red>");
                 return;
             }
-
+            Player player = (Player) sender;
+            player.performCommand("id false");
+            player.performCommand("pvp true");
+            player.performCommand("gamemode @a survival");
             game.start();
             MessageUtils.sendMessage(sender, "<green>¡Juego KOTH iniciado!</green>");
         }
@@ -43,6 +47,13 @@ public class ConsolarCommand extends BaseCommand {
                 MessageUtils.sendMessage(sender, "<red>El juego no está en curso.</red>");
                 return;
             }
+            Player player = (Player) sender;
+            player.performCommand("id true");
+            player.performCommand("pvp false");
+            player.performCommand("gamemode @a adventure");
+
+            // Clear all online players' inventories
+            Bukkit.getOnlinePlayers().forEach(p -> p.getInventory().clear());
 
             game.stop();
             MessageUtils.sendMessage(sender, "<green>¡Juego KOTH detenido!</green>");
