@@ -35,9 +35,15 @@ public class ConsolarCommand extends BaseCommand {
             Player player = (Player) sender;
             player.performCommand("id false");
             player.performCommand("pvp true");
-            player.performCommand("gamemode @a survival");
+            player.performCommand("gamemode survival @e[gamemode=adventure]");
+
+            // Dar items especiales solo a jugadores en modo ADVENTURE
+            Bukkit.getOnlinePlayers().stream()
+                    .filter(p -> p.getGameMode() == org.bukkit.GameMode.ADVENTURE)
+                    .forEach(game::giveSpecialItem);
+
             game.start();
-            MessageUtils.sendMessage(sender, "<green>¡Juego KOTH iniciado!</green>");
+            MessageUtils.sendMessage(sender, "<green>¡Juegoiniciado!</green>");
         }
 
         @Subcommand("stop")
@@ -50,13 +56,18 @@ public class ConsolarCommand extends BaseCommand {
             Player player = (Player) sender;
             player.performCommand("id true");
             player.performCommand("pvp false");
-            player.performCommand("gamemode @a adventure");
+            player.performCommand("gamemode adventure @e[gamemode=survival]");
 
-            // Clear all online players' inventories
-            Bukkit.getOnlinePlayers().forEach(p -> p.getInventory().clear());
+            // Limpiar inventarios solo de jugadores en modo ADVENTURE
+            Bukkit.getOnlinePlayers().stream()
+                    .filter(p -> p.getGameMode() == org.bukkit.GameMode.ADVENTURE)
+                    .forEach(p -> {
+                        p.getInventory().clear();
+                        game.removeSpecialItem(p);
+                    });
 
             game.stop();
-            MessageUtils.sendMessage(sender, "<green>¡Juego KOTH detenido!</green>");
+            MessageUtils.sendMessage(sender, "<green>¡Juego detenido!</green>");
         }
 
         @Default
@@ -64,9 +75,9 @@ public class ConsolarCommand extends BaseCommand {
         public void onHelp(CommandSender sender) {
             MessageUtils.sendMessage(sender, "<yellow>Comandos disponibles:</yellow>");
             MessageUtils.sendMessage(sender,
-                    "<gray>- /consolar game start</gray> <white>- Inicia el juego KOTH</white>");
+                    "<gray>- /consolar game start</gray> <white>- Inicia el juego</white>");
             MessageUtils.sendMessage(sender,
-                    "<gray>- /consolar game stop</gray> <white>- Detiene el juego KOTH</white>");
+                    "<gray>- /consolar game stop</gray> <white>- Detiene el juego</white>");
         }
     }
 

@@ -51,8 +51,8 @@ public class KothGame {
         Bukkit.getOnlinePlayers().forEach(this::giveSpecialItem);
 
         // Anunciar inicio
-        MessageUtils.broadcastTitle("<aqua><bold>COMIENZA",
-                "<white>¡El juego ha comenzado!</white>", 1, 1, 1);
+        // MessageUtils.broadcastTitle("<aqua><bold>COMIENZA",
+        // "<white>¡El juego ha comenzado!</white>", 1, 1, 1);
         MessageUtils.broadcastActionBar("<yellow>¡Captura la zona para ganar puntos!</yellow>");
         SoundUtils.broadcastPlayerSound(Sound.ENTITY_ENDER_DRAGON_GROWL, 0.5f, 1.0f);
     }
@@ -81,9 +81,9 @@ public class KothGame {
         zone.clearPlayers();
 
         // Anunciar fin
-        MessageUtils.broadcastTitle("<red><bold>GG",
-                "<white>¡El juego ha terminado!</white>", 1, 3, 1);
-        SoundUtils.broadcastPlayerSound(Sound.ENTITY_WITHER_DEATH, 0.5f, 1.0f);
+        // MessageUtils.broadcastTitle("<red><bold>GG",
+        // "<white>¡El juego ha terminado!</white>", 1, 3, 1);
+        // SoundUtils.broadcastPlayerSound(Sound.ENTITY_WITHER_DEATH, 0.5f, 1.0f);
     }
 
     public void giveSpecialItem(Player player) {
@@ -148,7 +148,8 @@ public class KothGame {
         if (inZone && !wasInZone) {
             // Jugador entró a la zona
             zone.addPlayer(player);
-            SoundUtils.playerSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 0.5f, 1.0f);
+            // SoundUtils.playerSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 0.5f,
+            // 1.0f);
             // MessageUtils.sendActionBar(player, "<green>¡Has entrado a la zona
             // KOTH!</green>");
         } else if (!inZone && wasInZone) {
