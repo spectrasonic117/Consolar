@@ -48,7 +48,9 @@ public class KothGame {
         particleTask = new ParticleTask(plugin, zone).runTaskTimer(plugin, 0L, 10L);
 
         // Dar items especiales a todos los jugadores
-        Bukkit.getOnlinePlayers().forEach(this::giveSpecialItem);
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            giveSpecialItem(player);
+        }
 
         // Anunciar inicio
         // MessageUtils.broadcastTitle("<aqua><bold>COMIENZA",
@@ -87,6 +89,11 @@ public class KothGame {
     }
 
     public void giveSpecialItem(Player player) {
+        // Solo dar el item a jugadores en modo ADVENTURE
+        if (player.getGameMode() != org.bukkit.GameMode.ADVENTURE) {
+            return;
+        }
+        
         ItemStack specialItem = ItemBuilder.setMaterial("PAPER")
                 .setName("<light_purple><bold>DILDO")
                 .setLore("<gray>¡Usa este item para empujar a tus enemigos!",
@@ -95,15 +102,9 @@ public class KothGame {
                 .setCustomModelData(1014)
                 .setFlag("HIDE_ENCHANTS")
                 .build();
-
-        // Guardar el item anterior si existe
-        if (player.getInventory().getItemInMainHand().getType() != Material.AIR) {
-            specialItems.put(player.getUniqueId(), player.getInventory().getItemInMainHand());
-        }
-
+                
         player.getInventory().setItemInMainHand(specialItem);
     }
-
     public void removeSpecialItem(Player player) {
         UUID uuid = player.getUniqueId();
 

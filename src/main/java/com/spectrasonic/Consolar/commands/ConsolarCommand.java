@@ -37,11 +37,6 @@ public class ConsolarCommand extends BaseCommand {
             player.performCommand("pvp true");
             player.performCommand("gamemode survival @e[gamemode=adventure]");
 
-            // Dar items especiales solo a jugadores en modo ADVENTURE
-            Bukkit.getOnlinePlayers().stream()
-                    .filter(p -> p.getGameMode() == org.bukkit.GameMode.ADVENTURE)
-                    .forEach(game::giveSpecialItem);
-
             game.start();
             MessageUtils.sendMessage(sender, "<green>¡Juegoiniciado!</green>");
         }
