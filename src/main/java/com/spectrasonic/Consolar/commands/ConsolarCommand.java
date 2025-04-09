@@ -35,6 +35,7 @@ public class ConsolarCommand extends BaseCommand {
             Player player = (Player) sender;
             player.performCommand("id false");
             player.performCommand("pvp true");
+            player.performCommand("nexo give @a dildo");
             player.performCommand("gamemode survival @e[gamemode=adventure]");
 
             game.start();

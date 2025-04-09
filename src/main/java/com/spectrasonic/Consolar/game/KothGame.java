@@ -48,9 +48,9 @@ public class KothGame {
         particleTask = new ParticleTask(plugin, zone).runTaskTimer(plugin, 0L, 10L);
 
         // Dar items especiales a todos los jugadores
-        for (Player player : Bukkit.getOnlinePlayers()) {
-            giveSpecialItem(player);
-        }
+        // for (Player player : Bukkit.getOnlinePlayers()) {
+        //     giveSpecialItem(player);
+        // }
 
         // Anunciar inicio
         // MessageUtils.broadcastTitle("<aqua><bold>COMIENZA",
