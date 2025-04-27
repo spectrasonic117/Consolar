@@ -16,7 +16,7 @@ public class ConsolarCommand extends BaseCommand {
     private final JavaPlugin plugin;
     private final KothGame game;
 
-    public ConsolarCommand(JavaPlugin plugin, KothGame game) {
+    public ConsolarCommand(JavaPlugin plugin, KothGame game)  {
         this.plugin = plugin;
         this.game = game;
     }
