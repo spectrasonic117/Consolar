@@ -14,7 +14,7 @@ import java.util.UUID;
 
 public class PointsTask extends BukkitRunnable {
     private final JavaPlugin plugin;
-    private final KothGame game;
+    private final KothGame game; 
 
     public PointsTask(JavaPlugin plugin, KothGame game) {
         this.plugin = plugin;
@@ -28,22 +28,33 @@ public class PointsTask extends BukkitRunnable {
             return;
         }
 
-        // Otorgar puntos a jugadores en la zona
+        int pointsPerTick;
+        switch (game.getCurrentRound()) {
+            case 2:
+                pointsPerTick = 2;
+                break;
+            case 3:
+                pointsPerTick = 4;
+                break;
+            case 1:
+            default:
+                pointsPerTick = 1;
+                break;
+        }
+
+
         for (UUID uuid : game.getZone().getPlayersInZone()) {
             Player player = Bukkit.getPlayer(uuid);
             if (player != null && player.isOnline()) {
-                game.getPointsManager().addPoints(player, 1);
+                game.getPointsManager().addPoints(player, pointsPerTick);
                 
-                // Mostrar actionbar brevemente
-                MessageUtils.sendActionBar(player, "<green>+1 punto</green>");
+                MessageUtils.sendActionBar(player, "<green>+" + pointsPerTick + " punto" + (pointsPerTick > 1 ? "s" : "") + "</green>");
                 
-                // Reproducir sonido de puntuación
                 SoundUtils.playerSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 0.5f, 1.0f);
                 
-                // Programar la eliminación del actionbar después de un breve tiempo
                 Bukkit.getScheduler().runTaskLater(plugin, () -> {
                     MessageUtils.sendActionBar(player, "");
-                }, 10L); // 10 ticks = 0.5 segundos
+                }, 10L);
             }
         }
     }

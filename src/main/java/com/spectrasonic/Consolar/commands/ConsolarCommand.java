@@ -5,6 +5,7 @@ import co.aikar.commands.annotation.*;
 import com.spectrasonic.Consolar.Utils.MessageUtils;
 import com.spectrasonic.Consolar.game.KothGame;
 
+import org.bukkit.GameMode;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -27,19 +28,26 @@ public class ConsolarCommand extends BaseCommand {
 
         @Subcommand("start")
         @Description("Inicia el juego KOTH")
-        public void onStart(CommandSender sender) {
+        @CommandCompletion("1|2|3")
+        public void onStart(CommandSender sender, @Optional @Single Integer round) {
             if (game.isRunning()) {
                 MessageUtils.sendMessage(sender, "<red>El juego ya está en curso.</red>");
                 return;
             }
+
+            int selectedRound = (round != null && (round == 1 || round == 2 || round == 3)) ? round : 1;
+            if (round != null && selectedRound != round) {
+                 MessageUtils.sendMessage(sender, "<yellow>Ronda especificada inválida (" + round + "). Iniciando Ronda 1 por defecto.</yellow>");
+            }
+
             Player player = (Player) sender;
             player.performCommand("id false");
             player.performCommand("pvp true");
             player.performCommand("nexo give @a dildo");
             player.performCommand("gamemode survival @e[gamemode=adventure]");
 
-            game.start();
-            MessageUtils.sendMessage(sender, "<green>¡Juegoiniciado!</green>");
+            game.start(selectedRound);
+            MessageUtils.sendMessage(sender, "<green>¡Juego iniciado en Ronda " + selectedRound + "!</green>");
         }
 
         @Subcommand("stop")
@@ -54,9 +62,8 @@ public class ConsolarCommand extends BaseCommand {
             player.performCommand("pvp false");
             player.performCommand("gamemode adventure @e[gamemode=survival]");
 
-            // Limpiar inventarios solo de jugadores en modo ADVENTURE
             Bukkit.getOnlinePlayers().stream()
-                    .filter(p -> p.getGameMode() == org.bukkit.GameMode.ADVENTURE)
+                    .filter(p -> p.getGameMode() == GameMode.ADVENTURE)
                     .forEach(p -> {
                         p.getInventory().clear();
                         game.removeSpecialItem(p);
@@ -71,7 +78,7 @@ public class ConsolarCommand extends BaseCommand {
         public void onHelp(CommandSender sender) {
             MessageUtils.sendMessage(sender, "<yellow>Comandos disponibles:</yellow>");
             MessageUtils.sendMessage(sender,
-                    "<gray>- /consolar game start</gray> <white>- Inicia el juego</white>");
+                    "<gray>- /consolar game start [1|2|3]</gray> <white>- Inicia el juego (opcional: numero de ronda)</white>");
             MessageUtils.sendMessage(sender,
                     "<gray>- /consolar game stop</gray> <white>- Detiene el juego</white>");
         }
